@@ -34,7 +34,7 @@ def callback_conf (conf):
     global last_conf
     global pwm_value
 
-    if conf.data > 0.5:
+    if conf.data > 0.6:
         # Se já está no nível ideal, manter a intensidade atual
         pwm_value = pwm_value  
     else:

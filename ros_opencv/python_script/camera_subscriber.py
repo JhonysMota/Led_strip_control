@@ -29,7 +29,7 @@ def callbackFunction (msg):
 	#criando um objeto bridge
 	bridgeObject=CvBridge()
 	rospy.loginfo("received a video message/frame")
-	print(f"conf: {conf}")
+	#print(f"conf: {conf}")
 	#convertendo de cv_bridge to OpenCV image format
 	convertedFrameBackToCV=bridgeObject.imgmsg_to_cv2(msg)
 

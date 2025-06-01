@@ -59,23 +59,8 @@ while True:
             # Caixa
             cv.rectangle(frame, (x1, y1), (x2, y2), color, 2)
 
-            # Fundo do texto
-            (text_w, text_h), _ = cv.getTextSize(label_text, cv.FONT_HERSHEY_SIMPLEX, 0.6, 2)
-            overlay = frame.copy()
-            cv.rectangle(overlay, (x1, y1 - text_h - 10), (x1 + text_w, y1), (0, 0, 0), -1)
-            frame = cv.addWeighted(overlay, 0.5, frame, 0.5, 0)
-
             # Texto
             cv.putText(frame, label_text, (x1, y1 - 5), cv.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
-
-            # # Contorno se houver máscara
-            # mask = result.masks
-            # if mask is not None:
-            #     try:
-            #         contours, _ = cv.findContours(mask.data[0].cpu().numpy().astype('uint8'), cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
-            #         cv.drawContours(frame, contours, -1, color, 2)
-            #     except:
-            #         pass
 
             print(f"[{label_text}] x_center: {x_center:.4f}, y_center: {y_center:.4f}, área: {area:.2f}")
 

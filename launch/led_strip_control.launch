@@ -1,0 +1,11 @@
+<launch>
+  <!-- Node que controla a fita led -->
+  <node pkg="client_node" name="control_node" type="client_node.py" output="screen"/>
+
+  <!-- Include do launch para o drive da fita led (uav.launch) -->
+  <include file="$(find led_strip_driver)/launch/uav.launch"/>
+
+  <!-- Nodes do OpenCV que controlam a camera -->
+  <node pkg="ros_opencv" name="camera_subscriber" type="camera_subscriber.py" output="screen"/>
+  <node pkg="ros_opencv" name="camera_prediction" type="camera_prediction.py" output="screen"/>
+</launch>

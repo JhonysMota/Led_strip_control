@@ -7,10 +7,18 @@ import rospy
 import numpy as np
 from sensor_msgs.msg import Image
 from std_msgs.msg import Float64
+import rospkg
 
-# Carregando o modelo treinado
-model = YOLO("18-12-24-Model-best.pt")
-#model = YOLO("yolo11n-seg.pt")  # load an official model
+# Obtém o caminho absoluto do pacote
+rospack = rospkg.RosPack()
+package_path = rospack.get_path('ros_opencv') 
+
+# Monta o caminho do modelo relativo ao pacote
+model_path = package_path + "/models/18-12-24-Model-best.pt"
+
+# Carrega o modelo o treinado
+model = YOLO(model_path)
+#model = YOLO(package_path + "/models/yolo11n-seg.pt")  # Carrega um modelo oficial
 
 rospy.init_node('camera_prediction')
 publisher = rospy.Publisher('video_topic', Image, queue_size=60)
@@ -20,7 +28,7 @@ pub_conf=rospy.Publisher('conf_topic', Float64, queue_size=60)
 
 rate = rospy.Rate(30)
 
-cap = cv.VideoCapture(0)
+cap = cv.VideoCapture(0) #42 é o id da camera USB, e 0 é a webcam do computador
 video_width = int(cap.get(cv.CAP_PROP_FRAME_WIDTH))
 video_height = int(cap.get(cv.CAP_PROP_FRAME_HEIGHT))
 
@@ -109,7 +117,7 @@ def talker():
                         rospy.logwarn(f"Erro ao aplicar máscara: {e}")
 
 
-                print(f"[{label_text}] x_center: {x_center:.4f}, y_center: {y_center:.4f}, área: {area:.2f}")
+                #print(f"[{label_text}] x_center: {x_center:.4f}, y_center: {y_center:.4f}, área: {area:.2f}")
                 pub_conf.publish(conf)
                 rospy.loginfo('conf e publicado')
         
